@@ -12,3 +12,11 @@ Azure Resource Manager (ARM) template that creates a managed identity with OpenI
 - Sign up for an [Azure account](https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account).
 - Install [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) version 2.20 or later.
 - Install [Terraform](https://developer.hashicorp.com/terraform/install).
+
+## Contributing
+
+See [contributing guidelines](CONTRIBUTING.md).
+
+## License
+
+This project is licensed under the terms of the [MIT license](LICENSE).
