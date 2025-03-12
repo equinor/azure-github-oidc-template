@@ -6,7 +6,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.33.93.31351",
-      "templateHash": "2416120754318275213"
+      "templateHash": "675968263939668760"
     }
   },
   "definitions": {
@@ -65,6 +65,29 @@
       "apiVersion": "2023-07-31-preview",
       "name": "[parameters('managedIdentityName')]",
       "location": "[resourceGroup().location]"
+    }
+  },
+  "outputs": {
+    "clientId": {
+      "type": "string",
+      "metadata": {
+        "description": "The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC."
+      },
+      "value": "[reference('managedIdentity').clientId]"
+    },
+    "subscriptionId": {
+      "type": "string",
+      "metadata": {
+        "description": "The subscription ID that should be used to authenticate from GitHub Actions to Azure using OIDC."
+      },
+      "value": "[subscription().subscriptionId]"
+    },
+    "tenantId": {
+      "type": "string",
+      "metadata": {
+        "description": "The tenant ID that should be used to authenticate from GitHub Actions to Azure using OIDC."
+      },
+      "value": "[tenant().tenantId]"
     }
   }
 }

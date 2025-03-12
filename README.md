@@ -5,10 +5,10 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 [![SCM Compliance](https://scm-compliance-api.radix.equinor.com/repos/equinor/azure-github-oidc-template/badge)](https://developer.equinor.com/governance/scm-policy/)
 
-Azure Resource Manager (ARM) template that creates a managed identity with OpenID Connect (OIDC) authentication from GitHub Actions:
+[![Deploy to Azure](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fequinor%2Fazure-github-oidc-template%2Fmain%2Fazuredeploy.json)
 
-- Creates a managed identity with the specified name.
-- Creates federated credentials for the GitHub OIDC identity provider with the specified names and subjects.
+- Creates a managed identity with the given name in Azure.
+- Adds federated credentials with the given names and subjects for the GitHub OIDC identity provider.
 
 ## Prerequisites
 
@@ -47,12 +47,43 @@ Azure Resource Manager (ARM) template that creates a managed identity with OpenI
 
    Requires Azure role `Contributor` at resource group.
 
+### Set values for GitHub Actions secrets
+
+1. Create a GitHub Actions workflow and set the following `GITHUB_TOKEN` permissions:
+
+   ```yaml
+   permissions:
+     id-token: write
+   ```
+
+1. Add the following step to authenticate from the GitHub actions workflow to Azure:
+
+   ```yaml
+   - uses: azure/login@v2
+     with:
+       client-id: ${{ secrets.AZURE_CLIENT_ID }}
+       subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+       tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+   ```
+
+   Get the values for secrets `AZURE_CLIENT_ID`, `AZURE_SUBSCRIPTION_ID` and `AZURE_TENANT_ID` from [outputs](#outputs).
+
 ## Parameters
 
 | Name | Description | Type | Default |
 | - | - | - | - |
 | `managedIdentityName` | The name of the managed identity to create. | `string` | |
 | `federatedCredentials` | An array of federated credentials to create for the managed identity. | `{ name: string, subject: string }[]` | `[]` |
+
+## Outputs
+
+When the deployment succeeds, the following output values are automatically returned in the results of the deployment:
+
+| Name | Description | Type |
+| - | - | - |
+| `clientId` | The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
+| `subscriptionId` | The subscription ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
+| `tenantId` | The tenant ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
 
 ## References
 
