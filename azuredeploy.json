@@ -6,7 +6,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.33.93.31351",
-      "templateHash": "7958857567719090376"
+      "templateHash": "2416120754318275213"
     }
   },
   "definitions": {
@@ -34,7 +34,7 @@
       "items": {
         "$ref": "#/definitions/federatedCredential"
       },
-      "minLength": 1,
+      "defaultValue": [],
       "metadata": {
         "description": "An array of federated credentials to create for the managed identity."
       }
