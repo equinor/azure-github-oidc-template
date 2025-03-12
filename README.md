@@ -8,6 +8,7 @@
 Azure Resource Manager (ARM) template that creates a managed identity with OpenID Connect (OIDC) authentication from GitHub Actions:
 
 - Creates a managed identity with the specified name.
+- Creates federated credentials for the GitHub OIDC identity provider with the specified names and subjects.
 
 ## Prerequisites
 

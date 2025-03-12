@@ -17,7 +17,7 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-
     for fic in federatedCredentials: {
       name: fic.name
       properties: {
-        issuer: 'https://token.actions.githubusercontent.com'
+        issuer: 'https://token.actions.githubusercontent.com' // GitHub OIDC identity provider URL
         subject: fic.subject
         audiences: ['api://AzureADTokenExchange']
       }
