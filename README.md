@@ -13,6 +13,11 @@ Azure Resource Manager (ARM) template that creates a managed identity with OpenI
 - Install [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) version 2.20 or later.
 - Install [Terraform](https://developer.hashicorp.com/terraform/install).
 
+## References
+
+- [Configuring OpenID Connect in Azure - GitHub Docs](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-azure)
+- [Use GitHub Actions to connect to Azure - Microsoft Learn](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure)
+
 ## Contributing
 
 See [contributing guidelines](CONTRIBUTING.md).
