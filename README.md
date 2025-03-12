@@ -52,6 +52,14 @@ Azure Resource Manager (ARM) template that creates a managed identity with OpenI
 | - | - | - | - |
 | `managedIdentityName` | The name of the managed identity to create. | `string` | |
 
+## Outputs
+
+| Name | Description | Type |
+| - | - | - |
+| `clientId` | The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
+| `subscriptionId` | The subscription ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
+| `tenantId` | The tenant ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
+
 ## References
 
 - [Configuring OpenID Connect in Azure - GitHub Docs](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-azure)
