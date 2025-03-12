@@ -62,12 +62,12 @@ Azure Resource Manager (ARM) template that creates a managed identity with OpenI
    ```yaml
    - uses: azure/login@v2
      with:
-       client-id: <CLIENT_ID>
-       subscription-id: <SUBSCRIPTION_ID>
-       tenant-id: <TENANT_ID>
+       client-id: ${{ secrets.AZURE_CLIENT_ID }}
+       subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+       tenant-id: ${{ secrets.AZURE_TENANT_ID }}
    ```
 
-   Get the values for `CLIENT_ID`, `<SUBSCRIPTION_ID>` and `<TENANT_ID>` from [outputs](#outputs).
+   Get the values for secrets `AZURE_CLIENT_ID`, `AZURE_SUBSCRIPTION_ID` and `AZURE_TENANT_ID` from [outputs](#outputs).
 
 ## Parameters
 
