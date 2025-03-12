@@ -6,3 +6,9 @@
 [![SCM Compliance](https://scm-compliance-api.radix.equinor.com/repos/equinor/azure-github-actions-oidc-template/badge)](https://developer.equinor.com/governance/scm-policy/)
 
 Azure Resource Manager (ARM) template that creates a managed identity with OpenID Connect (OIDC) authentication from GitHub Actions.
+
+## Prerequisites
+
+- Sign up for an [Azure account](https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account).
+- Install [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) version 2.20 or later.
+- Install [Terraform](https://developer.hashicorp.com/terraform/install).
