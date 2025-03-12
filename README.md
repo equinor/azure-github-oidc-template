@@ -12,6 +12,38 @@ Azure Resource Manager (ARM) template that creates a managed identity with OpenI
 - Sign up for an [Azure account](https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account).
 - Install [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) version 2.20 or later.
 
+## Usage
+
+### Create managed identity for Azure resources
+
+1. Login to Azure:
+
+   ```console
+   az login
+   ```
+
+1. Set active subscription:
+
+   ```console
+   az account set --name <SUBSCRIPTION_NAME>
+   ```
+
+1. Create resource group:
+
+   ```console
+   az group create --name <RESOURCE_GROUP_NAME> --location <LOCATION>
+   ```
+
+   Requires Azure role `Contributor` at subscription.
+
+1. Create a deployment at resource group from the template URI:
+
+   ```console
+   az deployment group create --name github-actions-oidc --resource-group <RESOURCE_GROUP_NAME> --template-uri https://raw.githubusercontent.com/equinor/azure-github-actions-oidc-template/refs/heads/main/azuredeploy.json --parameters managedIdentityName=<MANAGED_IDENTITY_NAME>
+   ```
+
+   Requires Azure role `Contributor` at resource group.
+
 ## Parameters
 
 | Name | Description | Type | Default |
