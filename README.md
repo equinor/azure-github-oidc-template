@@ -1,9 +1,9 @@
-# Azure GitHub Actions OIDC Template
+# Azure GitHub OIDC Template
 
-[![GitHub License](https://img.shields.io/github/license/equinor/azure-github-actions-oidc-template)](LICENSE)
-[![GitHub Release](https://img.shields.io/github/v/release/equinor/azure-github-actions-oidc-template)](https://github.com/equinor/azure-github-actions-oidc-template/releases/latest)
+[![GitHub License](https://img.shields.io/github/license/equinor/azure-github-oidc-template)](LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/equinor/azure-github-oidc-template)](https://github.com/equinor/azure-github-oidc-template/releases/latest)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
-[![SCM Compliance](https://scm-compliance-api.radix.equinor.com/repos/equinor/azure-github-actions-oidc-template/badge)](https://developer.equinor.com/governance/scm-policy/)
+[![SCM Compliance](https://scm-compliance-api.radix.equinor.com/repos/equinor/azure-github-oidc-template/badge)](https://developer.equinor.com/governance/scm-policy/)
 
 Azure Resource Manager (ARM) template that creates a managed identity with OpenID Connect (OIDC) authentication from GitHub Actions:
 
@@ -42,7 +42,7 @@ Azure Resource Manager (ARM) template that creates a managed identity with OpenI
 1. Create a deployment at resource group from the template URI:
 
    ```console
-   az deployment group create --name github-actions-oidc --resource-group <RESOURCE_GROUP_NAME> --template-uri https://raw.githubusercontent.com/equinor/azure-github-actions-oidc-template/refs/heads/main/azuredeploy.json --parameters managedIdentityName=<MANAGED_IDENTITY_NAME>
+   az deployment group create --name github-actions-oidc --resource-group <RESOURCE_GROUP_NAME> --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/refs/heads/main/azuredeploy.json --parameters managedIdentityName=<MANAGED_IDENTITY_NAME>
    ```
 
    Requires Azure role `Contributor` at resource group.
