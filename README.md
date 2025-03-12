@@ -67,6 +67,8 @@ Azure Resource Manager (ARM) template that creates a managed identity with OpenI
        tenant-id: <TENANT_ID>
    ```
 
+   Get the values for `CLIENT_ID`, `<SUBSCRIPTION_ID>` and `<TENANT_ID>` from [outputs](#outputs).
+
 ## Parameters
 
 | Name | Description | Type | Default |
