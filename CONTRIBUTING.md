@@ -4,7 +4,7 @@ This document provides guidelines for contributing to this project.
 
 ## Requesting changes
 
-[Open a new issue](https://github.com/equinor/terraform-backend/issues/new/choose).
+[Open a new issue](https://github.com/equinor/azure-github-oidc-template/issues/new/choose).
 
 ## Making changes
 
@@ -17,10 +17,10 @@ This document provides guidelines for contributing to this project.
 
 1. Create a pull request to merge your changes into the `main` branch.
 
-   This will trigger a [build workflow run](https://github.com/equinor/azure-terraform-backend-template/actions/workflows/build.yml) that builds `azuredeploy.json`.
+   This will trigger a [build workflow run](https://github.com/equinor/azure-github-oidc-template/actions/workflows/build.yml) that builds `azuredeploy.json`.
 
 1. Request a review.
 
 1. Once approved, merge the pull request.
 
-   This will trigger a [release workflow run](https://github.com/equinor/azure-terraform-backend-template/actions/workflows/release.yml) that creates a new GitHub release.
+   This will trigger a [release workflow run](https://github.com/equinor/azure-github-oidc-template/actions/workflows/release.yml) that creates a new GitHub release.
