@@ -7,8 +7,7 @@ type federatedCredential = {
 param managedIdentityName string
 
 @description('An array of federated credentials to create for the managed identity.')
-@minLength(1)
-param federatedCredentials federatedCredential[]
+param federatedCredentials federatedCredential[] = []
 
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
   name: managedIdentityName
