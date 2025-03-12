@@ -1,11 +1,25 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "languageVersion": "2.0",
   "contentVersion": "1.0.0.0",
   "metadata": {
     "_generator": {
       "name": "bicep",
       "version": "0.33.93.31351",
-      "templateHash": "15722976573776687829"
+      "templateHash": "2416120754318275213"
+    }
+  },
+  "definitions": {
+    "federatedCredential": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        }
+      }
     }
   },
   "parameters": {
@@ -14,14 +28,43 @@
       "metadata": {
         "description": "The name of the managed identity to create."
       }
+    },
+    "federatedCredentials": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/federatedCredential"
+      },
+      "defaultValue": [],
+      "metadata": {
+        "description": "An array of federated credentials to create for the managed identity."
+      }
     }
   },
-  "resources": [
-    {
+  "resources": {
+    "managedIdentity::federatedIdentityCredential": {
+      "copy": {
+        "name": "managedIdentity::federatedIdentityCredential",
+        "count": "[length(parameters('federatedCredentials'))]"
+      },
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials",
+      "apiVersion": "2023-07-31-preview",
+      "name": "[format('{0}/{1}', parameters('managedIdentityName'), parameters('federatedCredentials')[copyIndex()].name)]",
+      "properties": {
+        "issuer": "https://token.actions.githubusercontent.com",
+        "subject": "[parameters('federatedCredentials')[copyIndex()].subject]",
+        "audiences": [
+          "api://AzureADTokenExchange"
+        ]
+      },
+      "dependsOn": [
+        "managedIdentity"
+      ]
+    },
+    "managedIdentity": {
       "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
       "apiVersion": "2023-07-31-preview",
       "name": "[parameters('managedIdentityName')]",
       "location": "[resourceGroup().location]"
     }
-  ]
+  }
 }
