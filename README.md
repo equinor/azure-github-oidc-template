@@ -75,6 +75,8 @@ Azure Resource Manager (ARM) template that creates a managed identity with OpenI
 
 ## Outputs
 
+When the deployment succeeds, the following output values are automatically returned in the results of the deployment:
+
 | Name | Description | Type |
 | - | - | - |
 | `clientId` | The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
