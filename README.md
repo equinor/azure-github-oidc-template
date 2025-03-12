@@ -58,7 +58,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
      id-token: write
    ```
 
-1. Add the following step to authenticate from the GitHub actions workflow to Azure:
+1. Add the following step to authenticate from the GitHub Actions workflow to Azure:
 
    ```yaml
    - uses: azure/login@v2
