@@ -46,6 +46,25 @@ Azure Resource Manager (ARM) template that creates a managed identity with OpenI
 
    Requires Azure role `Contributor` at resource group.
 
+### Set values for GitHub Actions secrets
+
+1. Create a GitHub Actions workflow and set the following `GITHUB_TOKEN` permissions:
+
+   ```yaml
+   permissions:
+     id-token: write
+   ```
+
+1. Add the following step to authenticate from the GitHub actions workflow to Azure:
+
+   ```yaml
+   - uses: azure/login@v2
+     with:
+       client-id: <CLIENT_ID>
+       subscription-id: <SUBSCRIPTION_ID>
+       tenant-id: <TENANT_ID>
+   ```
+
 ## Parameters
 
 | Name | Description | Type | Default |
