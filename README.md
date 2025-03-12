@@ -7,6 +7,8 @@
 
 [![Deploy to Azure](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fequinor%2Fazure-github-oidc-template%2Fmain%2Fazuredeploy.json)
 
+Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) authentication from GitHub Actions to Azure:
+
 - Creates a managed identity with the given name in Azure.
 - Adds federated credentials with the given names and subjects for the GitHub OIDC identity provider.
 
