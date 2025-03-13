@@ -28,6 +28,7 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-
 resource lock 'Microsoft.Authorization/locks@2020-05-01' = {
   name: 'OIDC'
   scope: managedIdentity
+  dependsOn: [managedIdentity::federatedIdentityCredential] // Lock must be created last
   properties: {
     level: 'ReadOnly'
     notes: 'Prevent changes to OIDC configuration'
