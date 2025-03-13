@@ -5,7 +5,7 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 [![SCM Compliance](https://scm-compliance-api.radix.equinor.com/repos/equinor/azure-github-oidc-template/badge)](https://developer.equinor.com/governance/scm-policy/)
 
-[![Deploy to Azure](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fequinor%2Fazure-github-oidc-template%2Fmain%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fequinor%2Fazure-github-oidc-template%2Fmain%2Fazuredeploy.json)
 
 Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) authentication from GitHub Actions to Azure:
 
