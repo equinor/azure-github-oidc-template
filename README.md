@@ -68,7 +68,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
    ```
 
-   Get the values for secrets `AZURE_CLIENT_ID`, `AZURE_SUBSCRIPTION_ID` and `AZURE_TENANT_ID` from [outputs](#outputs).
+   Get the values for [secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) `AZURE_CLIENT_ID`, `AZURE_SUBSCRIPTION_ID` and `AZURE_TENANT_ID` from [outputs](#outputs).
 
 ## Parameters
 
