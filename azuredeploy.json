@@ -6,7 +6,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.33.93.31351",
-      "templateHash": "11345410415670851904"
+      "templateHash": "9981786851967607381"
     }
   },
   "definitions": {
@@ -76,6 +76,7 @@
         "notes": "Prevent changes to OIDC configuration"
       },
       "dependsOn": [
+        "managedIdentity::federatedIdentityCredential",
         "managedIdentity"
       ]
     }
