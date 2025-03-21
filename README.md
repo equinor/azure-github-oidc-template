@@ -11,6 +11,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 
 - Creates a managed identity with the given name in Azure.
 - Adds federated credentials with the given names and subjects for the GitHub OIDC identity provider.
+- Creates a read-only lock to prevent changes to the managed identity.
 
 ## Prerequisites
 
@@ -47,7 +48,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
    az deployment group create --name github-actions-oidc --resource-group <RESOURCE_GROUP_NAME> --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/refs/heads/main/azuredeploy.json --parameters managedIdentityName=<MANAGED_IDENTITY_NAME> federatedCredentials='({ "name": "github-branch", "subject": "repo:<GH_REPO>:ref:refs/heads/main" })'
    ```
 
-   Requires Azure role `Contributor` at resource group.
+   Requires Azure role `Owner` at resource group.
 
 ### Set values for GitHub Actions secrets
 
