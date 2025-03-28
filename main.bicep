@@ -15,7 +15,8 @@ param managedIdentityName string
 param federatedCredentials federatedCredential[] = []
 
 @description('An array of roles the created service principal should be allowed to assign to other principals.')
-param assignableRoles string[]
+@minLength(1)
+param rbacAssignableRoles string[]
 
 var location = deployment().location
 
@@ -37,7 +38,7 @@ module rbac 'modules/roleAssignments.bicep' = {
   name: 'roleAssignments' // TODO: set deployment name
   params: {
     principalId: servicePrincipal.outputs.principalId
-    assignableRoles: assignableRoles
+    rbacAssignableRoles: rbacAssignableRoles
   }
 }
 

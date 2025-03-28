@@ -6,7 +6,7 @@ targetScope = 'subscription'
 param principalId string
 
 @description('Array of roles that the service principal should be allowed to assign to other principals.')
-param assignableRoles string[]
+param rbacAssignableRoles string[]
 
 var subscriptionId = subscription().id
 
@@ -32,7 +32,7 @@ var rbacAdministratorDefinitionId = resourceId(
   'f58310d9-a9f6-439a-9e8d-f62e7b41a168'
 )
 
-var allowedRoles = join(assignableRoles, ', ')
+var allowedRoles = join(rbacAssignableRoles, ', ')
 
 resource rbacAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(subscriptionId, principalId, rbacAdministratorDefinitionId)
