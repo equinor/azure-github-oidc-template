@@ -2,7 +2,13 @@
 
 targetScope = 'subscription'
 
+@description('The ID of the service principal to assign roles to')
 param principalId string
+
+@description('Array of roles that the service principal should be allowed to assign to other principals.')
+param assignableRoles string[]
+
+var subscriptionId = subscription().id
 
 // Contributor
 var contributorDefinitionId = resourceId(
@@ -11,10 +17,11 @@ var contributorDefinitionId = resourceId(
 )
 
 resource contributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(subscription().id, principalId, contributorDefinitionId)
+  name: guid(subscriptionId, principalId, contributorDefinitionId)
   properties: {
-    principalId: principalId
+    description: 'Allow service principal to manage all resources'
     principalType: 'ServicePrincipal'
+    principalId: principalId
     roleDefinitionId: contributorDefinitionId
   }
 }
@@ -25,13 +32,16 @@ var rbacAdministratorDefinitionId = resourceId(
   'f58310d9-a9f6-439a-9e8d-f62e7b41a168'
 )
 
+var allowedRoles = join(assignableRoles, ', ')
+
 resource rbacAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(subscription().id, principalId, 'roleDefinitionId')
+  name: guid(subscriptionId, principalId, rbacAdministratorDefinitionId)
   properties: {
-    principalId: principalId
+    description: 'Allow service principal to assign selected roles'
     principalType: 'ServicePrincipal'
+    principalId: principalId
     roleDefinitionId: rbacAdministratorDefinitionId
-    condition: '' // TODO: prevent assignment of privileged roles.
+    condition: '((!(ActionMatches{\'Microsoft.Authorization/roleAssignments/write\'})) OR (@Request[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {${allowedRoles}})) AND ((!(ActionMatches{\'Microsoft.Authorization/roleAssignments/delete\'})) OR (@Resource[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {${allowedRoles}}))'
     conditionVersion: '2.0'
   }
 }
