@@ -14,9 +14,7 @@ param managedIdentityName string
 @description('An array of federated credentials to add to the managed identity.')
 param federatedCredentials federatedCredential[] = []
 
-@description('An array of IDs of roles that the created service principal should be allowed to assign to other principals.')
-@minLength(1)
-param allowedRoleIds string[]
+param roleAssignments object[] = []
 
 var location = deployment().location
 
@@ -38,7 +36,7 @@ module authorization 'modules/authorization.bicep' = {
   name: 'authorization'
   params: {
     principalId: managedIdentity.outputs.principalId
-    allowedRoleIds: allowedRoleIds
+    roleAssignments: roleAssignments
   }
 }
 
