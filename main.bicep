@@ -22,7 +22,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-11-01' = {
 }
 
 module servicePrincipal 'modules/servicePrincipal.bicep' = {
-  name: 'servicePrincipal'
+  name: 'servicePrincipal' // TODO: set deployment name
   scope: resourceGroup
   params: {
     managedIdentityName: managedIdentityName
@@ -31,7 +31,7 @@ module servicePrincipal 'modules/servicePrincipal.bicep' = {
 }
 
 module rbac 'modules/roleAssignments.bicep' = {
-  name: 'roleAssignments'
+  name: 'roleAssignments' // TODO: set deployment name
   params: {
     principalId: servicePrincipal.outputs.principalId
   }
