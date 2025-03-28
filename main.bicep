@@ -25,8 +25,8 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-11-01' = {
   location: location
 }
 
-module servicePrincipal 'modules/servicePrincipal.bicep' = {
-  name: 'servicePrincipal' // TODO: set deployment name
+module servicePrincipal 'modules/managedIdentity.bicep' = {
+  name: 'managedIdentity' // TODO: set deployment name
   scope: resourceGroup
   params: {
     managedIdentityName: managedIdentityName
@@ -34,8 +34,8 @@ module servicePrincipal 'modules/servicePrincipal.bicep' = {
   }
 }
 
-module rbac 'modules/roleAssignments.bicep' = {
-  name: 'roleAssignments' // TODO: set deployment name
+module rbac 'modules/authorization.bicep' = {
+  name: 'authorization' // TODO: set deployment name
   params: {
     principalId: servicePrincipal.outputs.principalId
     rbacAssignableRoles: rbacAssignableRoles
