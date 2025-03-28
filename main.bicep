@@ -14,6 +14,7 @@ param managedIdentityName string
 @description('An array of federated credentials to add to the managed identity.')
 param federatedCredentials federatedCredential[] = []
 
+@description('An array of role assignments to create at the subscription scope.')
 param roleAssignments object[] = []
 
 var location = deployment().location

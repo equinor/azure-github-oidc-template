@@ -70,7 +70,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 | - | - | - | - |
 | `managedIdentityName` | The name of the managed identity to create. | `string` | |
 | `federatedCredentials` | An array of federated credentials to add to the managed identity. | `{ name: string, subject: string }[]` | `[]` |
-| `roleAssignments` | An array of role assignments to create for the managed identity. | `{ roleDefinitionId: string, condition: string }[]` | `[]` |
+| `roleAssignments` | An array of role assignments to create at the subscription scope. | `{ roleDefinitionId: string, condition: string }[]` | `[]` |
 
 > [!TIP]
 > Rather than passing parameters as inline values, create a [parameter file](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/parameter-files).
