@@ -1,0 +1,2 @@
+# Ignore Bicep parameter files to prevent accidental commit of sensitive information
+*.bicepparam
