@@ -1,12 +1,12 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
   "languageVersion": "2.0",
   "contentVersion": "1.0.0.0",
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.33.93.31351",
-      "templateHash": "9981786851967607381"
+      "version": "0.34.1.11899",
+      "templateHash": "7242772591384346753"
     }
   },
   "definitions": {
@@ -23,6 +23,12 @@
     }
   },
   "parameters": {
+    "resourceGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the resource group to create."
+      }
+    },
     "managedIdentityName": {
       "type": "string",
       "metadata": {
@@ -38,45 +44,209 @@
       "metadata": {
         "description": "An array of federated credentials to add to the managed identity."
       }
+    },
+    "roleAssignments": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "defaultValue": [],
+      "metadata": {
+        "description": "An array of role assignments to create at the subscription scope."
+      }
     }
   },
+  "variables": {
+    "location": "[deployment().location]"
+  },
   "resources": {
-    "managedIdentity::federatedIdentityCredential": {
-      "copy": {
-        "name": "managedIdentity::federatedIdentityCredential",
-        "count": "[length(parameters('federatedCredentials'))]"
-      },
-      "type": "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials",
-      "apiVersion": "2023-07-31-preview",
-      "name": "[format('{0}/{1}', parameters('managedIdentityName'), parameters('federatedCredentials')[copyIndex()].name)]",
-      "properties": {
-        "issuer": "https://token.actions.githubusercontent.com",
-        "subject": "[parameters('federatedCredentials')[copyIndex()].subject]",
-        "audiences": [
-          "api://AzureADTokenExchange"
-        ]
-      },
-      "dependsOn": [
-        "managedIdentity"
-      ]
+    "resourceGroup": {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2024-11-01",
+      "name": "[parameters('resourceGroupName')]",
+      "location": "[variables('location')]"
     },
     "managedIdentity": {
-      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
-      "apiVersion": "2023-07-31-preview",
-      "name": "[parameters('managedIdentityName')]",
-      "location": "[resourceGroup().location]"
-    },
-    "lock": {
-      "type": "Microsoft.Authorization/locks",
-      "apiVersion": "2020-05-01",
-      "scope": "[format('Microsoft.ManagedIdentity/userAssignedIdentities/{0}', parameters('managedIdentityName'))]",
-      "name": "OIDC",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "managedIdentity",
+      "resourceGroup": "[parameters('resourceGroupName')]",
       "properties": {
-        "level": "ReadOnly",
-        "notes": "Prevent changes to OIDC configuration"
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "managedIdentityName": {
+            "value": "[parameters('managedIdentityName')]"
+          },
+          "federatedCredentials": {
+            "value": "[parameters('federatedCredentials')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "languageVersion": "2.0",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.34.1.11899",
+              "templateHash": "7346977882702917552"
+            }
+          },
+          "definitions": {
+            "federatedCredential": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "subject": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "parameters": {
+            "managedIdentityName": {
+              "type": "string"
+            },
+            "federatedCredentials": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/federatedCredential"
+              },
+              "defaultValue": []
+            }
+          },
+          "resources": {
+            "managedIdentity::federatedIdentityCredential": {
+              "copy": {
+                "name": "managedIdentity::federatedIdentityCredential",
+                "count": "[length(parameters('federatedCredentials'))]"
+              },
+              "type": "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials",
+              "apiVersion": "2023-07-31-preview",
+              "name": "[format('{0}/{1}', parameters('managedIdentityName'), parameters('federatedCredentials')[copyIndex()].name)]",
+              "properties": {
+                "issuer": "https://token.actions.githubusercontent.com",
+                "subject": "[parameters('federatedCredentials')[copyIndex()].subject]",
+                "audiences": [
+                  "api://AzureADTokenExchange"
+                ]
+              },
+              "dependsOn": [
+                "managedIdentity"
+              ]
+            },
+            "managedIdentity": {
+              "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+              "apiVersion": "2023-07-31-preview",
+              "name": "[parameters('managedIdentityName')]",
+              "location": "[resourceGroup().location]"
+            },
+            "lock": {
+              "type": "Microsoft.Authorization/locks",
+              "apiVersion": "2020-05-01",
+              "scope": "[format('Microsoft.ManagedIdentity/userAssignedIdentities/{0}', parameters('managedIdentityName'))]",
+              "name": "OIDC",
+              "properties": {
+                "level": "ReadOnly",
+                "notes": "Prevent changes to OIDC configuration"
+              },
+              "dependsOn": [
+                "managedIdentity::federatedIdentityCredential",
+                "managedIdentity"
+              ]
+            }
+          },
+          "outputs": {
+            "clientId": {
+              "type": "string",
+              "value": "[reference('managedIdentity').clientId]"
+            },
+            "subscriptionId": {
+              "type": "string",
+              "value": "[subscription().subscriptionId]"
+            },
+            "tenantId": {
+              "type": "string",
+              "value": "[tenant().tenantId]"
+            },
+            "principalId": {
+              "type": "string",
+              "value": "[reference('managedIdentity').principalId]"
+            }
+          }
+        }
       },
       "dependsOn": [
-        "managedIdentity::federatedIdentityCredential",
+        "resourceGroup"
+      ]
+    },
+    "authorization": {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "authorization",
+      "location": "[deployment().location]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "principalId": {
+            "value": "[reference('managedIdentity').outputs.principalId.value]"
+          },
+          "roleAssignments": {
+            "value": "[parameters('roleAssignments')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+          "languageVersion": "2.0",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.34.1.11899",
+              "templateHash": "8585380380742469193"
+            }
+          },
+          "parameters": {
+            "principalId": {
+              "type": "string"
+            },
+            "roleAssignments": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "defaultValue": []
+            }
+          },
+          "resources": {
+            "roleAssignment": {
+              "copy": {
+                "name": "roleAssignment",
+                "count": "[length(parameters('roleAssignments'))]"
+              },
+              "type": "Microsoft.Authorization/roleAssignments",
+              "apiVersion": "2022-04-01",
+              "name": "[guid(subscription().id, parameters('principalId'), parameters('roleAssignments')[copyIndex()].roleDefinitionId)]",
+              "properties": {
+                "principalId": "[parameters('principalId')]",
+                "principalType": "ServicePrincipal",
+                "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', parameters('roleAssignments')[copyIndex()].roleDefinitionId)]",
+                "condition": "[parameters('roleAssignments')[copyIndex()].condition]",
+                "conditionVersion": "[if(not(equals(parameters('roleAssignments')[copyIndex()].condition, null())), '2.0', null())]"
+              }
+            }
+          }
+        }
+      },
+      "dependsOn": [
         "managedIdentity"
       ]
     }
@@ -87,21 +257,21 @@
       "metadata": {
         "description": "The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC."
       },
-      "value": "[reference('managedIdentity').clientId]"
+      "value": "[reference('managedIdentity').outputs.clientId.value]"
     },
     "subscriptionId": {
       "type": "string",
       "metadata": {
         "description": "The subscription ID that should be used to authenticate from GitHub Actions to Azure using OIDC."
       },
-      "value": "[subscription().subscriptionId]"
+      "value": "[reference('managedIdentity').outputs.subscriptionId.value]"
     },
     "tenantId": {
       "type": "string",
       "metadata": {
         "description": "The tenant ID that should be used to authenticate from GitHub Actions to Azure using OIDC."
       },
-      "value": "[tenant().tenantId]"
+      "value": "[reference('managedIdentity').outputs.tenantId.value]"
     }
   }
 }
