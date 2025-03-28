@@ -1,11 +1,6 @@
-// Assigns subscription roles to the service principal of the given object ID.
-
 targetScope = 'subscription'
 
-@description('The ID of the service principal to assign roles to')
 param principalId string
-
-@description('Array of roles that the service principal should be allowed to assign to other principals.')
 param rbacAssignableRoles string[]
 
 var subscriptionId = subscription().id

@@ -25,8 +25,8 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-11-01' = {
   location: location
 }
 
-module servicePrincipal 'modules/managedIdentity.bicep' = {
-  name: 'managedIdentity' // TODO: set deployment name
+module managedIdentity 'modules/managedIdentity.bicep' = {
+  name: 'managedIdentity'
   scope: resourceGroup
   params: {
     managedIdentityName: managedIdentityName
@@ -34,19 +34,19 @@ module servicePrincipal 'modules/managedIdentity.bicep' = {
   }
 }
 
-module rbac 'modules/authorization.bicep' = {
-  name: 'authorization' // TODO: set deployment name
+module authorization 'modules/authorization.bicep' = {
+  name: 'authorization'
   params: {
-    principalId: servicePrincipal.outputs.principalId
+    principalId: managedIdentity.outputs.principalId
     rbacAssignableRoles: rbacAssignableRoles
   }
 }
 
 @description('The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC.')
-output clientId string = servicePrincipal.outputs.clientId
+output clientId string = managedIdentity.outputs.clientId
 
 @description('The subscription ID that should be used to authenticate from GitHub Actions to Azure using OIDC.')
-output subscriptionId string = servicePrincipal.outputs.subscriptionId
+output subscriptionId string = managedIdentity.outputs.subscriptionId
 
 @description('The tenant ID that should be used to authenticate from GitHub Actions to Azure using OIDC.')
-output tenantId string = servicePrincipal.outputs.tenantId
+output tenantId string = managedIdentity.outputs.tenantId
