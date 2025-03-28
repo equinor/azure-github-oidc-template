@@ -34,21 +34,13 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
    az account set --name <SUBSCRIPTION_NAME>
    ```
 
-1. Create resource group:
+1. Create a deployment at subscription from the template URI:
 
    ```console
-   az group create --name <RESOURCE_GROUP_NAME> --location <LOCATION>
+   az deployment sub create --name github-actions-oidc --location northeurope --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/refs/heads/main/azuredeploy.json --parameters resourceGroupName=<RESOURCE_GROUP_NAME> managedIdentityName=<MANAGED_IDENTITY_NAME> federatedCredentials='({ "name": "github-branch", "subject": "repo:<GH_REPO>:ref:refs/heads/main" })'
    ```
 
-   Requires Azure role `Contributor` at subscription.
-
-1. Create a deployment at resource group from the template URI:
-
-   ```console
-   az deployment group create --name github-actions-oidc --resource-group <RESOURCE_GROUP_NAME> --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/refs/heads/main/azuredeploy.json --parameters managedIdentityName=<MANAGED_IDENTITY_NAME> federatedCredentials='({ "name": "github-branch", "subject": "repo:<GH_REPO>:ref:refs/heads/main" })'
-   ```
-
-   Requires Azure role `Owner` at resource group.
+   Requires Azure role `Owner` at subscription.
 
 ### Set values for GitHub Actions secrets
 

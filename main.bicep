@@ -14,6 +14,9 @@ param managedIdentityName string
 @description('An array of federated credentials to add to the managed identity.')
 param federatedCredentials federatedCredential[] = []
 
+@description('An array of roles the created service principal should be allowed to assign to other principals.')
+param assignableRoles string[]
+
 var location = deployment().location
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-11-01' = {
@@ -34,6 +37,7 @@ module rbac 'modules/roleAssignments.bicep' = {
   name: 'roleAssignments' // TODO: set deployment name
   params: {
     principalId: servicePrincipal.outputs.principalId
+    assignableRoles: assignableRoles
   }
 }
 
