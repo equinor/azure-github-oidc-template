@@ -11,8 +11,8 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 
 - Creates a managed identity with the given name in Azure.
 - Adds federated credentials with the given names and subjects for the GitHub OIDC identity provider.
+- Assigns role `Contributor` at the subscription scope by default.
 - Creates a read-only lock to prevent changes to the managed identity.
-- Creates role assignments with the given role definitions (and optional conditions) at the subscription scope.
 
 ## Prerequisites
 
@@ -38,7 +38,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 1. Create a deployment at subscription from the template URI:
 
    ```console
-   az deployment sub create --name github-actions-oidc --location northeurope --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/refs/heads/main/azuredeploy.json --parameters resourceGroupName=<RESOURCE_GROUP_NAME> managedIdentityName=<MANAGED_IDENTITY_NAME> federatedCredentials='({ "name": "github-branch", "subject": "repo:<GH_REPO>:ref:refs/heads/main" })' roleAssignments='({ "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c", "condition": null })'
+   az deployment sub create --name github-actions-oidc --location northeurope --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/refs/heads/main/azuredeploy.json --parameters resourceGroupName=<RESOURCE_GROUP_NAME> managedIdentityName=<MANAGED_IDENTITY_NAME> federatedCredentials='[{ "name": "github-branch", "subject": "repo:<GH_REPO>:ref:refs/heads/main" }]'
    ```
 
    Requires Azure role `Owner` at subscription.
@@ -70,7 +70,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 | - | - | - | - |
 | `managedIdentityName` | The name of the managed identity to create. | `string` | |
 | `federatedCredentials` | An array of federated credentials to add to the managed identity. | `{ name: string, subject: string }[]` | `[]` |
-| `roleAssignments` | An array of role assignments to create at the subscription scope. | `{ roleDefinitionId: string, condition: string }[]` | `[]` |
+| `roleAssignments` | An array of role assignments to create at the subscription scope. | `{ roleDefinitionId: string, condition: string? }[]` | `[{ roleDefinitionId: 'b24988ac-6180-42a0-ab88-20f7382dd24c' }]` |
 
 > [!TIP]
 > Rather than passing parameters as inline values, create a [parameter file](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/parameter-files).

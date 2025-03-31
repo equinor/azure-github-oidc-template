@@ -5,6 +5,11 @@ type federatedCredential = {
   subject: string
 }
 
+type roleAssignment = {
+  roleDefinitionId: string
+  condition: string?
+}
+
 @description('The name of the resource group to create.')
 param resourceGroupName string
 
@@ -15,7 +20,11 @@ param managedIdentityName string
 param federatedCredentials federatedCredential[] = []
 
 @description('An array of role assignments to create at the subscription scope.')
-param roleAssignments object[] = []
+param roleAssignments roleAssignment[] = [
+  {
+    roleDefinitionId: 'b24988ac-6180-42a0-ab88-20f7382dd24c' // Contributor
+  }
+]
 
 var location = deployment().location
 
