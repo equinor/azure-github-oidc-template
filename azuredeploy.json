@@ -5,12 +5,12 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.34.1.11899",
-      "templateHash": "13755287208434133906"
+      "version": "0.33.93.31351",
+      "templateHash": "9991945131870639606"
     }
   },
   "definitions": {
-    "federatedCredential": {
+    "federatedCredentialType": {
       "type": "object",
       "properties": {
         "name": {
@@ -21,7 +21,7 @@
         }
       }
     },
-    "roleAssignment": {
+    "roleAssignmentType": {
       "type": "object",
       "properties": {
         "roleDefinitionId": {
@@ -50,7 +50,7 @@
     "federatedCredentials": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/federatedCredential"
+        "$ref": "#/definitions/federatedCredentialType"
       },
       "defaultValue": [],
       "metadata": {
@@ -60,7 +60,7 @@
     "roleAssignments": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/roleAssignment"
+        "$ref": "#/definitions/roleAssignmentType"
       },
       "defaultValue": [
         {
@@ -107,12 +107,12 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.34.1.11899",
-              "templateHash": "7346977882702917552"
+              "version": "0.33.93.31351",
+              "templateHash": "8078455746273970456"
             }
           },
           "definitions": {
-            "federatedCredential": {
+            "federatedCredentialType": {
               "type": "object",
               "properties": {
                 "name": {
@@ -126,14 +126,20 @@
           },
           "parameters": {
             "managedIdentityName": {
-              "type": "string"
+              "type": "string",
+              "metadata": {
+                "description": "The name of the managed identity to create."
+              }
             },
             "federatedCredentials": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/federatedCredential"
+                "$ref": "#/definitions/federatedCredentialType"
               },
-              "defaultValue": []
+              "defaultValue": [],
+              "metadata": {
+                "description": "An array of federated credentials to add to the managed identity."
+              }
             }
           },
           "resources": {
@@ -180,18 +186,16 @@
           "outputs": {
             "clientId": {
               "type": "string",
+              "metadata": {
+                "description": "The client ID of the created managed identity."
+              },
               "value": "[reference('managedIdentity').clientId]"
-            },
-            "subscriptionId": {
-              "type": "string",
-              "value": "[subscription().subscriptionId]"
-            },
-            "tenantId": {
-              "type": "string",
-              "value": "[tenant().tenantId]"
             },
             "principalId": {
               "type": "string",
+              "metadata": {
+                "description": "The object (principal ID) of the created managed identity."
+              },
               "value": "[reference('managedIdentity').principalId]"
             }
           }
@@ -226,20 +230,40 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.34.1.11899",
-              "templateHash": "8585380380742469193"
+              "version": "0.33.93.31351",
+              "templateHash": "10633103747061078136"
+            }
+          },
+          "definitions": {
+            "roleAssignmentType": {
+              "type": "object",
+              "properties": {
+                "roleDefinitionId": {
+                  "type": "string"
+                },
+                "condition": {
+                  "type": "string",
+                  "nullable": true
+                }
+              }
             }
           },
           "parameters": {
             "principalId": {
-              "type": "string"
+              "type": "string",
+              "metadata": {
+                "description": "The object (principal) ID of the service principal to create role assignments for."
+              }
             },
             "roleAssignments": {
               "type": "array",
               "items": {
-                "type": "object"
+                "$ref": "#/definitions/roleAssignmentType"
               },
-              "defaultValue": []
+              "defaultValue": [],
+              "metadata": {
+                "description": "An array of role assignments to create at the subscription scrope."
+              }
             }
           },
           "resources": {
@@ -255,8 +279,8 @@
                 "principalId": "[parameters('principalId')]",
                 "principalType": "ServicePrincipal",
                 "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', parameters('roleAssignments')[copyIndex()].roleDefinitionId)]",
-                "condition": "[parameters('roleAssignments')[copyIndex()].condition]",
-                "conditionVersion": "[if(not(equals(parameters('roleAssignments')[copyIndex()].condition, null())), '2.0', null())]"
+                "condition": "[tryGet(parameters('roleAssignments')[copyIndex()], 'condition')]",
+                "conditionVersion": "[if(not(equals(tryGet(parameters('roleAssignments')[copyIndex()], 'condition'), null())), '2.0', null())]"
               }
             }
           }
@@ -280,14 +304,14 @@
       "metadata": {
         "description": "The subscription ID that should be used to authenticate from GitHub Actions to Azure using OIDC."
       },
-      "value": "[reference('managedIdentity').outputs.subscriptionId.value]"
+      "value": "[subscription().subscriptionId]"
     },
     "tenantId": {
       "type": "string",
       "metadata": {
         "description": "The tenant ID that should be used to authenticate from GitHub Actions to Azure using OIDC."
       },
-      "value": "[reference('managedIdentity').outputs.tenantId.value]"
+      "value": "[tenant().tenantId]"
     }
   }
 }
