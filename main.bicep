@@ -1,11 +1,11 @@
 targetScope = 'subscription'
 
-type federatedCredential = {
+type federatedCredentialType = {
   name: string
   subject: string
 }
 
-type roleAssignment = {
+type roleAssignmentType = {
   roleDefinitionId: string
   condition: string?
 }
@@ -17,10 +17,10 @@ param resourceGroupName string
 param managedIdentityName string
 
 @description('An array of federated credentials to add to the managed identity.')
-param federatedCredentials federatedCredential[] = []
+param federatedCredentials federatedCredentialType[] = []
 
 @description('An array of role assignments to create at the subscription scope.')
-param roleAssignments roleAssignment[] = [
+param roleAssignments roleAssignmentType[] = [
   {
     roleDefinitionId: 'b24988ac-6180-42a0-ab88-20f7382dd24c' // Contributor
   }

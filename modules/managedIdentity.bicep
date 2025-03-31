@@ -1,10 +1,10 @@
-type federatedCredential = {
+type federatedCredentialType = {
   name: string
   subject: string
 }
 
 param managedIdentityName string
-param federatedCredentials federatedCredential[] = []
+param federatedCredentials federatedCredentialType[] = []
 
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
   name: managedIdentityName
