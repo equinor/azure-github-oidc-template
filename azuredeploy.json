@@ -6,7 +6,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.34.1.11899",
-      "templateHash": "7242772591384346753"
+      "templateHash": "13755287208434133906"
     }
   },
   "definitions": {
@@ -18,6 +18,18 @@
         },
         "subject": {
           "type": "string"
+        }
+      }
+    },
+    "roleAssignment": {
+      "type": "object",
+      "properties": {
+        "roleDefinitionId": {
+          "type": "string"
+        },
+        "condition": {
+          "type": "string",
+          "nullable": true
         }
       }
     }
@@ -48,9 +60,13 @@
     "roleAssignments": {
       "type": "array",
       "items": {
-        "type": "object"
+        "$ref": "#/definitions/roleAssignment"
       },
-      "defaultValue": [],
+      "defaultValue": [
+        {
+          "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+        }
+      ],
       "metadata": {
         "description": "An array of role assignments to create at the subscription scope."
       }
