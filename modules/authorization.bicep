@@ -5,7 +5,10 @@ type roleAssignmentType = {
   condition: string?
 }
 
+@description('The object (principal) ID of the service principal to create role assignments for.')
 param principalId string
+
+@description('An array of role assignments to create at the subscription scrope.')
 param roleAssignments roleAssignmentType[] = []
 
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = [
