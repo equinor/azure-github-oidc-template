@@ -11,7 +11,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 
 - Creates a managed identity with the given name in Azure.
 - Adds federated credentials with the given names and subjects for the GitHub OIDC identity provider.
-- Assigns role `Contributor` at the subscription scope by default.
+- Assigns the given roles at the subscription scope (`Contributor` by default).
 - Creates a read-only lock to prevent changes to the managed identity.
 
 ## Prerequisites
