@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/equinor/azure-github-oidc-template/compare/v0.3.0...v0.4.0) (2025-04-02)
+
+
+### Features
+
+* create role assignments ([#15](https://github.com/equinor/azure-github-oidc-template/issues/15)) ([c1a2a37](https://github.com/equinor/azure-github-oidc-template/commit/c1a2a375f99f7096ab4b4732a2b9bb3d14e17b84))
+
 ## [0.3.0](https://github.com/equinor/azure-github-oidc-template/compare/v0.2.0...v0.3.0) (2025-03-21)
 
 
