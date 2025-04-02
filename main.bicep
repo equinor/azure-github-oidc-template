@@ -1,42 +1,57 @@
-type federatedCredential = {
+targetScope = 'subscription'
+
+type federatedCredentialType = {
   name: string
   subject: string
 }
+
+type roleAssignmentType = {
+  roleDefinitionId: string
+  condition: string?
+}
+
+@description('The name of the resource group to create.')
+param resourceGroupName string
 
 @description('The name of the managed identity to create.')
 param managedIdentityName string
 
 @description('An array of federated credentials to add to the managed identity.')
-param federatedCredentials federatedCredential[] = []
+param federatedCredentials federatedCredentialType[] = []
 
-resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
-  name: managedIdentityName
-  location: resourceGroup().location
+@description('An array of role assignments to create at the subscription scope.')
+param roleAssignments roleAssignmentType[] = [
+  {
+    roleDefinitionId: 'b24988ac-6180-42a0-ab88-20f7382dd24c' // Contributor
+  }
+]
 
-  resource federatedIdentityCredential 'federatedIdentityCredentials' = [
-    for fic in federatedCredentials: {
-      name: fic.name
-      properties: {
-        issuer: 'https://token.actions.githubusercontent.com' // GitHub OIDC identity provider URL
-        subject: fic.subject
-        audiences: ['api://AzureADTokenExchange']
-      }
-    }
-  ]
+var location = deployment().location
+
+resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-11-01' = {
+  name: resourceGroupName
+  location: location
 }
 
-resource lock 'Microsoft.Authorization/locks@2020-05-01' = {
-  name: 'OIDC'
-  scope: managedIdentity
-  dependsOn: [managedIdentity::federatedIdentityCredential] // Lock must be created last
-  properties: {
-    level: 'ReadOnly'
-    notes: 'Prevent changes to OIDC configuration'
+module managedIdentity 'modules/managedIdentity.bicep' = {
+  name: 'managedIdentity'
+  scope: resourceGroup
+  params: {
+    managedIdentityName: managedIdentityName
+    federatedCredentials: federatedCredentials
+  }
+}
+
+module authorization 'modules/authorization.bicep' = {
+  name: 'authorization'
+  params: {
+    principalId: managedIdentity.outputs.principalId
+    roleAssignments: roleAssignments
   }
 }
 
 @description('The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC.')
-output clientId string = managedIdentity.properties.clientId
+output clientId string = managedIdentity.outputs.clientId
 
 @description('The subscription ID that should be used to authenticate from GitHub Actions to Azure using OIDC.')
 output subscriptionId string = subscription().subscriptionId

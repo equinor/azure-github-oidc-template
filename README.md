@@ -11,6 +11,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 
 - Creates a managed identity with the given name in Azure.
 - Adds federated credentials with the given names and subjects for the GitHub OIDC identity provider.
+- Assigns the given roles at the subscription scope (`Contributor` by default).
 - Creates a read-only lock to prevent changes to the managed identity.
 
 ## Prerequisites
@@ -34,21 +35,13 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
    az account set --name <SUBSCRIPTION_NAME>
    ```
 
-1. Create resource group:
+1. Create a deployment at subscription from the template URI:
 
    ```console
-   az group create --name <RESOURCE_GROUP_NAME> --location <LOCATION>
+   az deployment sub create --name github-actions-oidc --location northeurope --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/refs/heads/main/azuredeploy.json --parameters resourceGroupName=<RESOURCE_GROUP_NAME> managedIdentityName=<MANAGED_IDENTITY_NAME> federatedCredentials='[{ "name": "github-federated-identity", "subject": "repo:<GITHUB_REPOSITORY>:environment:development" }]'
    ```
 
-   Requires Azure role `Contributor` at subscription.
-
-1. Create a deployment at resource group from the template URI:
-
-   ```console
-   az deployment group create --name github-actions-oidc --resource-group <RESOURCE_GROUP_NAME> --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/refs/heads/main/azuredeploy.json --parameters managedIdentityName=<MANAGED_IDENTITY_NAME> federatedCredentials='({ "name": "github-branch", "subject": "repo:<GH_REPO>:ref:refs/heads/main" })'
-   ```
-
-   Requires Azure role `Owner` at resource group.
+   Requires Azure role `Owner` at subscription.
 
 ### Set values for GitHub Actions secrets
 
@@ -75,8 +68,10 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 
 | Name | Description | Type | Default |
 | - | - | - | - |
+| `resourceGroupName` | The name of the resource group to create. | `string` | |
 | `managedIdentityName` | The name of the managed identity to create. | `string` | |
 | `federatedCredentials` | An array of federated credentials to add to the managed identity. | `{ name: string, subject: string }[]` | `[]` |
+| `roleAssignments` | An array of role assignments to create at the subscription scope. | `{ roleDefinitionId: string, condition: string? }[]` | `[{ roleDefinitionId: 'b24988ac-6180-42a0-ab88-20f7382dd24c' }]` |
 
 > [!TIP]
 > Rather than passing parameters as inline values, create a [parameter file](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/parameter-files).
