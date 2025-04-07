@@ -38,7 +38,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 1. Create a deployment at subscription from the template URI:
 
    ```console
-   az deployment sub create --name github-actions-oidc --location northeurope --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/refs/heads/main/azuredeploy.json --parameters resourceGroupName=<RESOURCE_GROUP_NAME> managedIdentityName=<MANAGED_IDENTITY_NAME> federatedCredentials='[{ "name": "github-federated-identity", "subject": "repo:<GITHUB_REPOSITORY>:environment:development" }]'
+   az deployment sub create --name github-actions-oidc --location northeurope --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/main/azuredeploy.json --parameters resourceGroupName=<RESOURCE_GROUP_NAME> managedIdentityName=<MANAGED_IDENTITY_NAME> federatedCredentials='[{ "name": "github-federated-identity", "subject": "repo:<GITHUB_REPOSITORY>:environment:development" }]'
    ```
 
    Requires Azure role `Owner` at subscription.
