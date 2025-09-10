@@ -57,6 +57,9 @@ module authorization 'modules/authorization.bicep' = {
 @description('The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC.')
 output clientId string = managedIdentity.outputs.clientId
 
+@description('The object (principal) ID of the created managed identity.')
+output principalId string = managedIdentity.outputs.principalId
+
 @description('The subscription ID that should be used to authenticate from GitHub Actions to Azure using OIDC.')
 output subscriptionId string = subscription().subscriptionId
 
