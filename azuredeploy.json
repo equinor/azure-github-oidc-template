@@ -6,7 +6,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.37.4.10188",
-      "templateHash": "16706739101650092258"
+      "templateHash": "16412410663529300339"
     }
   },
   "definitions": {
@@ -112,7 +112,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.37.4.10188",
-              "templateHash": "4361191147276429572"
+              "templateHash": "14843456179307729230"
             }
           },
           "definitions": {
@@ -198,7 +198,7 @@
             "principalId": {
               "type": "string",
               "metadata": {
-                "description": "The object (principal) ID of the created managed identity."
+                "description": "The object (principal ID) of the created managed identity."
               },
               "value": "[reference('managedIdentity').principalId]"
             }
@@ -302,13 +302,6 @@
         "description": "The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC."
       },
       "value": "[reference('managedIdentity').outputs.clientId.value]"
-    },
-    "principalId": {
-      "type": "string",
-      "metadata": {
-        "description": "The object (principal) ID of the created managed identity."
-      },
-      "value": "[reference('managedIdentity').outputs.principalId.value]"
     },
     "subscriptionId": {
       "type": "string",
