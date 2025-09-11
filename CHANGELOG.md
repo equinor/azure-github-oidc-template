@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0](https://github.com/equinor/azure-github-oidc-template/compare/v0.4.0...v0.5.0) (2025-09-11)
+
+
+### Features
+
+* add output for principal ID ([#25](https://github.com/equinor/azure-github-oidc-template/issues/25)) ([65b8437](https://github.com/equinor/azure-github-oidc-template/commit/65b8437af40ebeba7606cd01b0e38e6b8a29a69d))
+* Assign RBAC administrator privileges by default ([#21](https://github.com/equinor/azure-github-oidc-template/issues/21)) ([3b27c9a](https://github.com/equinor/azure-github-oidc-template/commit/3b27c9a1c1cad6dd8cbab789ed329d3a3802d261))
+
 ## [0.4.0](https://github.com/equinor/azure-github-oidc-template/compare/v0.3.0...v0.4.0) (2025-04-02)
 
 
