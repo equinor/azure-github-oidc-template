@@ -83,6 +83,7 @@ When the deployment succeeds, the following output values are automatically retu
 | Name | Description | Type |
 | - | - | - |
 | `clientId` | The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
+| `principalId` | The object (principal) ID of the created managed identity. | `string` |
 | `subscriptionId` | The subscription ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
 | `tenantId` | The tenant ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
 
