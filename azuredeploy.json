@@ -5,8 +5,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.34.1.11899",
-      "templateHash": "11888791683255832091"
+      "version": "0.37.4.10188",
+      "templateHash": "6560546376974777882"
     }
   },
   "definitions": {
@@ -107,8 +107,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.34.1.11899",
-              "templateHash": "14477341524792062159"
+              "version": "0.37.4.10188",
+              "templateHash": "14843456179307729230"
             }
           },
           "definitions": {
@@ -178,8 +178,8 @@
                 "notes": "Prevent changes to OIDC configuration"
               },
               "dependsOn": [
-                "managedIdentity::federatedIdentityCredential",
-                "managedIdentity"
+                "managedIdentity",
+                "managedIdentity::federatedIdentityCredential"
               ]
             }
           },
@@ -230,8 +230,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.34.1.11899",
-              "templateHash": "15754715997355918299"
+              "version": "0.37.4.10188",
+              "templateHash": "3185574087708451054"
             }
           },
           "definitions": {
