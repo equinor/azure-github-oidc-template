@@ -38,5 +38,5 @@ resource lock 'Microsoft.Authorization/locks@2020-05-01' = {
 @description('The client ID of the created managed identity.')
 output clientId string = managedIdentity.properties.clientId
 
-@description('The object (principal ID) of the created managed identity.')
+@description('The object (principal) ID of the created managed identity.')
 output principalId string = managedIdentity.properties.principalId
