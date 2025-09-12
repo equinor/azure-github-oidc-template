@@ -11,7 +11,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 
 - Creates a managed identity with the given name in Azure.
 - Adds federated credentials for the GitHub OIDC identity provider with the given names and subjects.
-- Assigns the given roles at the subscription scope (`Contributor` by default).
+- Assigns the given roles at the subscription scope (`Contributor` and `Role Based Access Control Administrator` by default).
 - Creates a read-only lock to prevent changes to the managed identity.
 
 ## Prerequisites
@@ -38,7 +38,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 1. Create a deployment at subscription from the template URI:
 
    ```console
-   az deployment sub create --name github-actions-oidc --location northeurope --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/refs/heads/main/azuredeploy.json --parameters resourceGroupName=<RESOURCE_GROUP_NAME> managedIdentityName=<MANAGED_IDENTITY_NAME> federatedCredentials='[{ "name": "github-federated-identity", "subject": "repo:<GITHUB_REPOSITORY>:environment:development" }]'
+   az deployment sub create --name github-actions-oidc --location northeurope --template-uri https://raw.githubusercontent.com/equinor/azure-github-oidc-template/main/azuredeploy.json --parameters resourceGroupName=<RESOURCE_GROUP_NAME> managedIdentityName=<MANAGED_IDENTITY_NAME> federatedCredentials='[{ "name": "github-federated-identity", "subject": "repo:<GITHUB_REPOSITORY>:environment:development" }]'
    ```
 
    Requires Azure role `Owner` at subscription.
@@ -83,6 +83,7 @@ When the deployment succeeds, the following output values are automatically retu
 | Name | Description | Type |
 | - | - | - |
 | `clientId` | The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
+| `principalId` | The object (principal) ID of the created managed identity. | `string` |
 | `subscriptionId` | The subscription ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
 | `tenantId` | The tenant ID that should be used to authenticate from GitHub Actions to Azure using OIDC. | `string` |
 

@@ -6,7 +6,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.37.4.10188",
-      "templateHash": "6560546376974777882"
+      "templateHash": "16706739101650092258"
     }
   },
   "definitions": {
@@ -65,6 +65,10 @@
       "defaultValue": [
         {
           "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+        },
+        {
+          "roleDefinitionId": "f58310d9-a9f6-439a-9e8d-f62e7b41a168",
+          "condition": "((!(ActionMatches{'Microsoft.Authorization/roleAssignments/write'})) OR (@Request[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAllValues:GuidNotEquals {8e3af657-a8ff-443c-a75c-2fe8c4bcb635, 18d7d88d-d35e-4fb5-a5c3-7773c20a72d9, f58310d9-a9f6-439a-9e8d-f62e7b41a168})) AND ((!(ActionMatches{'Microsoft.Authorization/roleAssignments/delete'})) OR (@Resource[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAllValues:GuidNotEquals {8e3af657-a8ff-443c-a75c-2fe8c4bcb635, 18d7d88d-d35e-4fb5-a5c3-7773c20a72d9, f58310d9-a9f6-439a-9e8d-f62e7b41a168}))"
         }
       ],
       "metadata": {
@@ -108,7 +112,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.37.4.10188",
-              "templateHash": "14843456179307729230"
+              "templateHash": "4361191147276429572"
             }
           },
           "definitions": {
@@ -194,7 +198,7 @@
             "principalId": {
               "type": "string",
               "metadata": {
-                "description": "The object (principal ID) of the created managed identity."
+                "description": "The object (principal) ID of the created managed identity."
               },
               "value": "[reference('managedIdentity').principalId]"
             }
@@ -298,6 +302,13 @@
         "description": "The client ID that should be used to authenticate from GitHub Actions to Azure using OIDC."
       },
       "value": "[reference('managedIdentity').outputs.clientId.value]"
+    },
+    "principalId": {
+      "type": "string",
+      "metadata": {
+        "description": "The object (principal) ID of the created managed identity."
+      },
+      "value": "[reference('managedIdentity').outputs.principalId.value]"
     },
     "subscriptionId": {
       "type": "string",
