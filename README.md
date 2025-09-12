@@ -70,8 +70,8 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 | - | - | - | - |
 | `resourceGroupName` | The name of the resource group to create. | `string` | |
 | `managedIdentityName` | The name of the managed identity to create. | `string` | |
-| `federatedCredentials` | An array of federated credentials to add to the managed identity. | `{ name: string, subject: string }[]` | `[]` |
-| `roleAssignments` | An array of role assignments to create at the subscription scope. | `{ roleDefinitionId: string, condition: string? }[]` | `[{ roleDefinitionId: 'b24988ac-6180-42a0-ab88-20f7382dd24c' }]` |
+| `federatedCredentials` | An array of federated credentials to add to the managed identity. | `{ "name": string, "subject": string }[]` | `[]` |
+| `roleAssignments` | An array of role assignments to create at the subscription scope. | `{ "roleDefinitionId": string, "condition": string? }[]` | <details><summary>Show default</summary>`[{ "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c" }, { "roleDefinitionId": "f58310d9-a9f6-439a-9e8d-f62e7b41a168", "condition": "((!(ActionMatches{'Microsoft.Authorization/roleAssignments/write'})) OR (@Request[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAllValues:GuidNotEquals {8e3af657-a8ff-443c-a75c-2fe8c4bcb635, 18d7d88d-d35e-4fb5-a5c3-7773c20a72d9, f58310d9-a9f6-439a-9e8d-f62e7b41a168})) AND ((!(ActionMatches{'Microsoft.Authorization/roleAssignments/delete'})) OR (@Resource[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAllValues:GuidNotEquals {8e3af657-a8ff-443c-a75c-2fe8c4bcb635, 18d7d88d-d35e-4fb5-a5c3-7773c20a72d9, f58310d9-a9f6-439a-9e8d-f62e7b41a168}))" }]`</details> |
 
 > [!TIP]
 > Rather than passing parameters as inline values, create a [parameter file](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/parameter-files).
