@@ -5,8 +5,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.37.4.10188",
-      "templateHash": "16706739101650092258"
+      "version": "0.34.44.8038",
+      "templateHash": "3233861280613787245"
     }
   },
   "definitions": {
@@ -111,8 +111,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.37.4.10188",
-              "templateHash": "4361191147276429572"
+              "version": "0.34.44.8038",
+              "templateHash": "7620549460909459402"
             }
           },
           "definitions": {
@@ -150,7 +150,9 @@
             "managedIdentity::federatedIdentityCredential": {
               "copy": {
                 "name": "managedIdentity::federatedIdentityCredential",
-                "count": "[length(parameters('federatedCredentials'))]"
+                "count": "[length(parameters('federatedCredentials'))]",
+                "mode": "serial",
+                "batchSize": 1
               },
               "type": "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials",
               "apiVersion": "2023-07-31-preview",
@@ -234,8 +236,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.37.4.10188",
-              "templateHash": "3185574087708451054"
+              "version": "0.34.44.8038",
+              "templateHash": "901676221518198243"
             }
           },
           "definitions": {
