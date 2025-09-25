@@ -13,6 +13,8 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-
   name: managedIdentityName
   location: resourceGroup().location
 
+  // Parallel write operations to federated identity credential resources is currently not supported.
+  @batchSize(1)
   resource federatedIdentityCredential 'federatedIdentityCredentials' = [
     for fic in federatedCredentials: {
       name: fic.name
