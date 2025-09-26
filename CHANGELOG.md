@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/equinor/azure-github-oidc-template/compare/v0.5.0...v0.5.1) (2025-09-26)
+
+
+### Bug Fixes
+
+* parallel write operations to FIC resources not supported ([#27](https://github.com/equinor/azure-github-oidc-template/issues/27)) ([e82f424](https://github.com/equinor/azure-github-oidc-template/commit/e82f4241df891a744d99e3cdd7e366be40049db5))
+
 ## [0.5.0](https://github.com/equinor/azure-github-oidc-template/compare/v0.4.0...v0.5.0) (2025-09-11)
 
 
