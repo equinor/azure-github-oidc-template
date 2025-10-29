@@ -1,11 +1,5 @@
 # Azure GitHub OIDC Template
 
-[![GitHub Release](https://img.shields.io/github/v/release/equinor/azure-github-oidc-template)](https://github.com/equinor/azure-github-oidc-template/releases/latest)
-[![GitHub contributors](https://img.shields.io/github/contributors/equinor/azure-github-oidc-template)](https://github.com/equinor/azure-github-oidc-template/graphs/contributors)
-[![GitHub Issues](https://img.shields.io/github/issues/equinor/azure-github-oidc-template)](https://github.com/equinor/azure-github-oidc-template/issues)
-[![GitHub Pull requests](https://img.shields.io/github/issues-pr/equinor/azure-github-oidc-template)](https://github.com/equinor/azure-github-oidc-template/pulls)
-[![GitHub License](https://img.shields.io/github/license/equinor/azure-github-oidc-template)](https://github.com/equinor/azure-github-oidc-template/blob/main/LICENSE)
-
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fequinor%2Fazure-github-oidc-template%2Fmain%2Fazuredeploy.json)
 
 Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) authentication from GitHub Actions to Azure:
