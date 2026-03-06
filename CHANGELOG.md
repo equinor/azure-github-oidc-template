@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/equinor/azure-github-oidc-template/compare/v0.5.1...v0.5.2) (2026-03-06)
+
+
+### Bug Fixes
+
+* deployment already exists in location ([#29](https://github.com/equinor/azure-github-oidc-template/issues/29)) ([6771f11](https://github.com/equinor/azure-github-oidc-template/commit/6771f11b73a5ae333f28d0ae938c83d7abd12b7b))
+
 ## [0.5.1](https://github.com/equinor/azure-github-oidc-template/compare/v0.5.0...v0.5.1) (2025-09-26)
 
 
