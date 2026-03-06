@@ -5,8 +5,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.34.44.8038",
-      "templateHash": "3233861280613787245"
+      "version": "0.41.2.15936",
+      "templateHash": "17665709958384110733"
     }
   },
   "definitions": {
@@ -74,6 +74,14 @@
       "metadata": {
         "description": "An array of role assignments to create at the subscription scope."
       }
+    },
+    "managedIdentityDeploymentName": {
+      "type": "string",
+      "defaultValue": "[format('managedIdentity-{0}', utcNow())]"
+    },
+    "authorizationDeploymentName": {
+      "type": "string",
+      "defaultValue": "[format('authorization-{0}', utcNow())]"
     }
   },
   "variables": {
@@ -88,8 +96,8 @@
     },
     "managedIdentity": {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2022-09-01",
-      "name": "managedIdentity",
+      "apiVersion": "2025-04-01",
+      "name": "[parameters('managedIdentityDeploymentName')]",
       "resourceGroup": "[parameters('resourceGroupName')]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -111,8 +119,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.34.44.8038",
-              "templateHash": "7620549460909459402"
+              "version": "0.41.2.15936",
+              "templateHash": "5881000664555331812"
             }
           },
           "definitions": {
@@ -177,7 +185,7 @@
             "lock": {
               "type": "Microsoft.Authorization/locks",
               "apiVersion": "2020-05-01",
-              "scope": "[format('Microsoft.ManagedIdentity/userAssignedIdentities/{0}', parameters('managedIdentityName'))]",
+              "scope": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('managedIdentityName'))]",
               "name": "OIDC",
               "properties": {
                 "level": "ReadOnly",
@@ -213,8 +221,8 @@
     },
     "authorization": {
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2022-09-01",
-      "name": "authorization",
+      "apiVersion": "2025-04-01",
+      "name": "[parameters('authorizationDeploymentName')]",
       "location": "[deployment().location]",
       "properties": {
         "expressionEvaluationOptions": {
@@ -236,8 +244,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.34.44.8038",
-              "templateHash": "901676221518198243"
+              "version": "0.41.2.15936",
+              "templateHash": "13314963671472216067"
             }
           },
           "definitions": {
