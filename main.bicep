@@ -30,6 +30,9 @@ param roleAssignments roleAssignmentType[] = [
   }
 ]
 
+param managedIdentityDeploymentName string = 'managedIdentity-${utcNow()}'
+param authorizationDeploymentName string = 'authorization-${utcNow()}'
+
 var location = deployment().location
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-11-01' = {
@@ -38,7 +41,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-11-01' = {
 }
 
 module managedIdentity 'modules/managedIdentity.bicep' = {
-  name: 'managedIdentity'
+  name: managedIdentityDeploymentName
   scope: resourceGroup
   params: {
     managedIdentityName: managedIdentityName
@@ -47,7 +50,7 @@ module managedIdentity 'modules/managedIdentity.bicep' = {
 }
 
 module authorization 'modules/authorization.bicep' = {
-  name: 'authorization'
+  name: authorizationDeploymentName
   params: {
     principalId: managedIdentity.outputs.principalId
     roleAssignments: roleAssignments
