@@ -38,7 +38,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-11-01' = {
 }
 
 module managedIdentity 'modules/managedIdentity.bicep' = {
-  name: 'managedIdentity'
+  name: 'managedIdentity-${utcNow()}'
   scope: resourceGroup
   params: {
     managedIdentityName: managedIdentityName
@@ -47,7 +47,7 @@ module managedIdentity 'modules/managedIdentity.bicep' = {
 }
 
 module authorization 'modules/authorization.bicep' = {
-  name: 'authorization'
+  name: 'authorization-${utcNow()}'
   params: {
     principalId: managedIdentity.outputs.principalId
     roleAssignments: roleAssignments
