@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/equinor/azure-github-oidc-template/compare/v0.5.2...v0.6.0) (2026-03-13)
+
+
+### Features
+
+* assign Resource Policy Contributor Role by default ([#31](https://github.com/equinor/azure-github-oidc-template/issues/31)) ([2a516d4](https://github.com/equinor/azure-github-oidc-template/commit/2a516d4e946a5d69c40965f35c76d021f1ff83a1))
+
 ## [0.5.2](https://github.com/equinor/azure-github-oidc-template/compare/v0.5.1...v0.5.2) (2026-03-06)
 
 
