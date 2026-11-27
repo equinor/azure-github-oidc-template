@@ -33,7 +33,7 @@ Azure Resource Manager (ARM) template that configures OpenID Connect (OIDC) auth
 1. Retrieve Identifiers
 
    ```
-   gh api repos/<GITHUB_ORGANISATION_NAME>/<GITHUB_REPOSITORY_NAME>/ --jq '{repo_name: .name, repo_id: .id, owner_name: .owner.login, owner_id: .owner.id}'
+   gh api repos/<GITHUB_ORGANISATION_NAME>/<GITHUB_REPOSITORY_NAME> --jq '{repo_name: .name, repo_id: .id, owner_name: .owner.login, owner_id: .owner.id}'
    ```
    OR Navigate to
    ```
